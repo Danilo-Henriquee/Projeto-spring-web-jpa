@@ -1,11 +1,16 @@
 package com.localproject.springWebProject.resources;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.localproject.springWebProject.entities.User;
+import com.localproject.springWebProject.services.UserService;
 
 /*
  * Para dizer que essa classe UserResource é um recurso web que é
@@ -38,15 +43,32 @@ public class UserResource {
 	 * o GET no HTTP ele é responsavel por receber dados de um resource 
 	 * que no caso o resource é a entidade User
 	 */
+	@Autowired
+	private UserService service;
+	
 	@GetMapping
-	public ResponseEntity<User> findAll() {
-		User u = new User(1L, "Maria", "maria@gmail.com", "9999999", "12345");
+	public ResponseEntity<List<User>> findAll() {
+		List<User> list = service.findAll();
 		/*
 		 * Aqui o responseEntity esta utilizando o método ok() 
 		 * para retornar a response com sucesso no http e utiliza o 
 		 * .body() para retornar o corpo da resposta e passando
 		 * como parametro o u que é o usuario criado 
 		 */
-		return ResponseEntity.ok().body(u);
+		return ResponseEntity.ok().body(list);
+	}
+	
+	/*
+	 * Para dizer que esse método é o método Get da requisição HTTP 
+	 * usa o @GetMapping
+	 * O id dentro das chaves indica que a requisição vai aceitar
+	 * um Id dentro da URL
+	 * @PathVariable vai fazer com que o Spring aceite esse Id e vai
+	 * considera-lo como parametro que vai chegar na URL
+	 */
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<User> findById(@PathVariable Long id) {
+		User obj = service.findById(id);
+		return ResponseEntity.ok().body(obj);
 	}
 }

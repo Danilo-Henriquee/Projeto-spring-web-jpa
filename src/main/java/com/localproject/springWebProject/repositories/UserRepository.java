@@ -11,7 +11,13 @@ import com.localproject.springWebProject.entities.User;
  * seus generics qual vai ser o tipo de que as operações SQL irão
  * fazer, que no caso é o User, e no segundo generic, é o tipo da
  * chave primaria que deve ser igual ao da entidade User
+ * 
+ * UserRepository também esta tendo injeção autowired
+ * porém como é uma implementação do JpaRepository ela ja herda esse
+ * componente da mesma tornando a anotação @Repository opcional
  */
+
+//@Repository
 public interface UserRepository extends JpaRepository<User, Long>{
 	
 }
