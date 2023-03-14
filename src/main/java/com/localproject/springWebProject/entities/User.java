@@ -3,10 +3,28 @@ package com.localproject.springWebProject.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.annotation.Generated;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+// @Entity está sendo especificado que essa classe é uma entidade
+// @Table(name =) esta sendo especificado o nome da tabela 
+// que ira compor todas as entidades criadas
+@Entity
+@Table(name = "tb_user")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+//	Anotação @Id diz que o atributo Id é uma chave primaria do banco
+//	Anotação @GeneratedValue ele diz que a chave vai ser auto 
+//	incrementado no banco e não setado pelo usuario, então o 
+//	banco ira criar as ids
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private String email;

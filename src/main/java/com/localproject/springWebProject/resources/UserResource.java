@@ -14,13 +14,12 @@ import com.localproject.springWebProject.entities.User;
  * 
  * @RestController vai retornar o objeto e os dados desse objeto
  * no formato JSON para consumo
- */
-@RestController
-/*
+ * 
  * Além disso é preciso dar um nome para o recurso e nessa anotação vai ser
  * inserido o caminho do recurso e como é um recurso relacionado a entidade user
  * então vai ser chamado de "/users"
  */
+@RestController
 @RequestMapping(value = "/users")
 public class UserResource {
 
