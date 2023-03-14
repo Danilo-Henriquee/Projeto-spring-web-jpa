@@ -1,13 +1,16 @@
 package com.localproject.springWebProject.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 // @Entity está sendo especificado que essa classe é uma entidade
@@ -30,6 +33,18 @@ public class User implements Serializable {
 	private String email;
 	private String phone;
 	private String password;
+	
+	
+	/*
+	 * @OneToMany Essa anotação diz que essa associação 
+	 * é de um para muitos, no contexto um pedido pode 
+	 * ter somente um cliente
+	 * e o mappedBy é o nome do atributo que faz a 
+	 * associação de pedido com cliente na calsse Order
+	 * que no caso é client
+	 */
+	@OneToMany(mappedBy = "client")
+	private List<Order> orders = new ArrayList<>();
 	
 	public User() {
 	}
@@ -81,7 +96,11 @@ public class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
+	public List<Order> getOrders() {
+		return orders;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -98,4 +117,5 @@ public class User implements Serializable {
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
 	}
+
 }
