@@ -9,8 +9,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "tb_product")
@@ -26,9 +28,23 @@ public class Product implements Serializable {
 	private Double price;
 	private String imgUrl;
 	
-//	Para impedir que o produto tenha a ocorrência de mais
-//	de uma categoria se usa o set
-	@Transient
+	/*
+	 * @JoinTable é usado quando tem a associação muitos
+	 * para muitos, então o primeiro atributo name é o
+	 * nome da tabela auxiliar.
+	 * 
+	 * No segundo atributo joinColumns vai ser o nome da
+	 * chave estrangeira referente a tabela produto, 
+	 * dentro desse atributo se da o nome da chave 
+	 * estrangeira.
+	 * 
+	 * No terceiro atributo inverseJoinColumns que serve
+	 * para definir a chave estrangeira da outra entidade
+	 */
+	@ManyToMany
+	@JoinTable(name = "tb_product_category", 
+	joinColumns = @JoinColumn(name = "product_id"),
+	inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Set<Category> categories = new HashSet<>();
 	
 	public Product() {
