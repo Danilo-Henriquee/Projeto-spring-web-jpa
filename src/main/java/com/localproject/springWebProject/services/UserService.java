@@ -13,6 +13,8 @@ import com.localproject.springWebProject.repositories.UserRepository;
 import com.localproject.springWebProject.services.exceptions.DatabaseException;
 import com.localproject.springWebProject.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 /*
  * @Component está dizendo ao Spring que essa classe agora é um
  * componente spring e ele vai pode ser injetado com @Autowired
@@ -63,9 +65,15 @@ public class UserService {
 	}
 	
 	public User update(Long id, User obj) {
-		User entity = repository.getReferenceById(id);
-		updateData(entity, obj);
-		return repository.save(entity);
+		try {
+			User entity = repository.getReferenceById(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+		}
+		catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
+		
 	}
 
 	private void updateData(User entity, User obj) {
