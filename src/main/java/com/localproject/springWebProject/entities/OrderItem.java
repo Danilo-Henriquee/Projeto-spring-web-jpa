@@ -16,6 +16,8 @@ public class OrderItem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+//	Para dizer que essa variavel possui chave primaria
+//	composta
 	@EmbeddedId
 	private OrderItemPK id = new OrderItemPK();
 	
