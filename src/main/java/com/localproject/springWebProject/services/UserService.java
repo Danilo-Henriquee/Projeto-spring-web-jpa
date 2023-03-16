@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.localproject.springWebProject.entities.User;
 import com.localproject.springWebProject.repositories.UserRepository;
+import com.localproject.springWebProject.services.exceptions.ResourceNotFoundException;
 
 /*
  * @Component está dizendo ao Spring que essa classe agora é um
@@ -38,7 +39,7 @@ public class UserService {
 //		A operação get do optional ela vai retornar um objeto do tipo
 //		inserido no generic que no caso é o User que estiver dentro 
 //		do optional
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public User insert(User obj) {
